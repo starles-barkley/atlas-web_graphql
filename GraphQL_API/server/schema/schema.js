@@ -31,7 +31,7 @@ const ProjectType = new GraphQLObjectType({
     tasks: {
       type: new GraphQLList(TaskType),
       resolve(parent, args) {
-        // Return all tasks related to the project
+        // Return all tasks related to the project by using the projectId
         return Task.find({ projectId: parent.id });
       }
     }
@@ -46,26 +46,30 @@ const RootQuery = new GraphQLObjectType({
       type: TaskType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return Task.findById(args.id);
+        // Fetch task directly from the database
+        return Task.findById(args.id); // No longer using static array
       }
     },
     project: {
       type: ProjectType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return Project.findById(args.id);
+        // Fetch project directly from the database
+        return Project.findById(args.id); // No longer using static array
       }
     },
     tasks: {
       type: new GraphQLList(TaskType),
       resolve(parent, args) {
-        return Task.find(); // Return all tasks
+        // Fetch all tasks directly from the database
+        return Task.find(); // No longer using static array
       }
     },
     projects: {
       type: new GraphQLList(ProjectType),
       resolve(parent, args) {
-        return Project.find(); // Return all projects
+        // Fetch all projects directly from the database
+        return Project.find(); // No longer using static array
       }
     }
   }
